@@ -11,5 +11,5 @@
 ## you have list of games
 ![game page](https://user-images.githubusercontent.com/36056001/127822294-140cf6a9-f0ee-4118-a5d5-4e234f537326.png)
 
-## you have options serach details about the game that you want according the publisher, range years, genre...
+## you have options serach details about the game that you want according the publisher, range years, genre, platform or by the key words...
 ![search](https://user-images.githubusercontent.com/36056001/127822472-9bb3ef1a-9894-4734-a8fb-63026d841daf.png)
