@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:layout_gravity="left"
+                android:gravity="left"
+                android:maxLines="1"
+                android:textStyle="italic|bold"
+                android:id="@+id/name_store"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:paddingRight="14dp"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:textStyle="italic|bold"
+                android:id="@+id/distance_store_from_me"/>
+
+
+
+</LinearLayout>

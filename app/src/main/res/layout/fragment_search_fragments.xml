@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Search"
+        android:textSize="55sp"
+        android:textStyle="bold|italic"
+        android:layout_gravity="center"
+        android:textColor="@color/white"/>
+
+    <include layout="@layout/serach_edit_text"
+        android:id="@+id/search_edit_text"
+        android:layout_gravity="center"
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Platform, Year Of Release, Publisher, Gener -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!-- platform -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/platform"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:paddingHorizontal="10dp"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/spinner_platform"
+                android:layout_marginBottom="5dp"
+                android:spinnerMode="dialog"/>
+
+            <!-- Developrs -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/developrs"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:paddingHorizontal="10dp"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/spinner_developrs"
+                android:layout_marginBottom="5dp"
+                android:spinnerMode="dialog"/>
+
+            <!-- year_of_release-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingHorizontal="10dp"
+                android:textSize="12sp"
+                android:text="@string/year_of_release_from"
+                android:textColor="@color/white"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/spinner_year_of_release_from"
+                android:layout_marginBottom="5dp"
+                android:spinnerMode="dialog"/>
+
+<!-- year_of_release-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingHorizontal="10dp"
+                android:textSize="12sp"
+                android:text="Year of release to"
+                android:textColor="@color/white"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/spinner_year_of_release_to"
+                android:layout_marginBottom="5dp"
+                android:spinnerMode="dialog"/>
+
+            <!-- publisher-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingHorizontal="10dp"
+                android:textSize="12sp"
+                android:text="@string/publisher"
+                android:textColor="@color/white"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/spinner_publisher"
+                android:layout_marginBottom="5dp"
+                android:spinnerMode="dialog"/>
+
+            <!-- gener-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingHorizontal="10dp"
+                android:textSize="12sp"
+                android:text="@string/gener"
+                android:textColor="@color/white"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/spinner_gener"
+                android:layout_marginBottom="5dp"
+                android:spinnerMode="dialog"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="10dp"
+        android:background="@color/black"/>
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Search"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            android:textStyle="bold|italic"
+            android:layout_marginHorizontal="50dp"
+            android:paddingHorizontal="10dp"/>
+
+
+        <Button
+            android:id="@+id/button_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="50dp"
+            android:background="@drawable/button_background"
+            android:paddingHorizontal="10dp"
+            android:text="Clear"
+            android:textColor="@color/white"
+            android:textStyle="bold|italic" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.GameDetailsFragments"
+    android:background="@color/black">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- TODO: Update blank fragment layout -->
+
+        <!-- Profile game-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_weight="1"
+            android:id="@+id/image_profile_details"
+            android:scaleType="fitXY"/>
+        <!-- End Profile game -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/cardview_light_background"
+                android:layout_marginTop="299dp"/>
+
+
+        <!-- Text name game-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name_game_details"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:layout_marginTop="310dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+        <!-- End Text name game -->
+
+        <!-- Trailers Link -->
+         <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/link_to_show_trailers"
+             android:layout_marginTop="360dp"
+            android:layout_gravity="right"
+            android:background="@drawable/button_background"
+            android:textColor="@color/white"
+            android:text="Show Trailers"
+             android:visibility="invisible"
+            android:textSize="7sp"/>
+
+        <!-- Copyright -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/copyright_www_rawg_io"
+            android:textSize="10dp"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:layout_marginTop="300dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+        <!-- End Copyright -->
+
+        <!-- Rating -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="380dp"
+            android:text="Rating:"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/rating_game_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="380dp"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+        <!-- End Rating -->
+
+        <!-- Platform -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Platform:"
+            android:textSize="15dp"
+            android:layout_marginTop="415dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/platform_list_game_details"
+            android:textSize="15dp"
+            android:layout_marginTop="415dp"
+            android:maxLines="2"
+            android:layout_marginLeft="65dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+        <!-- End Platform -->
+
+        <!-- Released -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Released:"
+            android:textSize="15dp"
+            android:layout_marginTop="455dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/released_game_details"
+            android:textSize="15dp"
+            android:layout_marginTop="455dp"
+            android:layout_marginLeft="70dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+        <!-- End Released -->
+
+        <!-- Website -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Website:"
+            android:textSize="15dp"
+            android:layout_marginTop="485dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/web_game_details"
+            android:textSize="15dp"
+            android:layout_marginTop="485dp"
+            android:layout_marginLeft="65dp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:autoLink="web"
+            android:textColorLink="@color/red"/>
+        <!-- End Website -->
+
+        <!-- Playtime -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Playtime (In Hours):"
+            android:textSize="15dp"
+            android:layout_marginTop="520dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/playtime_game_details"
+            android:textSize="15dp"
+            android:layout_marginTop="520dp"
+            android:layout_marginLeft="140dp"
+            android:textStyle="bold"
+            android:textColor="@color/white" />
+        <!-- End Playtime -->
+
+        <!-- Game Series Count -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Game Series Count:"
+            android:textSize="15dp"
+            android:layout_marginTop="545dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/game_series_count_details"
+            android:textSize="15dp"
+            android:layout_marginTop="545dp"
+            android:layout_marginLeft="140dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+        <!-- End Game Series Count -->
+
+
+
+        <!-- About On Game -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About:"
+            android:textSize="15dp"
+            android:layout_marginTop="570dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <com.borjabravo.readmoretextview.ReadMoreTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/about_game_details"
+            android:textSize="15dp"
+            app:trimExpandedText="@string/read_less"
+            app:trimCollapsedText="@string/read_more"
+            app:trimMode="trimModeLength"
+            app:trimLength="120"
+            android:layout_marginTop="595dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:colorClickableText="@color/red"/>
+        <!-- End About On Game -->
+
+    </FrameLayout>
+
+</ScrollView>

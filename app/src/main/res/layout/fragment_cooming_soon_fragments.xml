@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/nested_scrool_view"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:text="@string/coming_soon"
+            android:textSize="35sp"
+            android:textStyle="bold|italic"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:id="@+id/title_cooming_soon"
+            android:textColor="@color/white"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler_view_cooming_soon_game"
+            android:layout_below="@id/title_cooming_soon"
+            android:background="@drawable/background_recycleview"
+            android:nestedScrollingEnabled="false"/>
+
+
+            <ProgressBar
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/progress_circular"
+                android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
+
+
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:text="@string/cooming_soon"-->
+<!--        android:textSize="35sp"-->
+<!--        android:textStyle="bold|italic"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:gravity="center"-->
+<!--        android:id="@+id/title_cooming_soon"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:background="@color/black"-->
+<!--        android:textColor="@color/white"/>-->
+
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:id="@+id/recycler_view_cooming_soon_game"-->
+<!--        android:layout_below="@id/title_cooming_soon"-->
+<!--        android:background="@drawable/background_recycleview"/>-->
+
+<!--    <ProgressBar-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:id="@+id/progress_circular" />-->
+
+
+<!--</RelativeLayout>-->

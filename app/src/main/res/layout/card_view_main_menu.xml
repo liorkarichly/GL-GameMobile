@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="170dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="NamespaceTypo"
+    android:layout_marginStart="15dp"
+    android:layout_marginLeft="10dp">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_main_menu"
+        android:layout_width="361dp"
+        android:layout_height="144dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="30dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true">
+
+        <FrameLayout
+            android:layout_width="362dp"
+            android:layout_height="145dp"
+            android:background="@color/black">
+
+            <ImageView
+                android:id="@+id/image_view_profile_game"
+                android:layout_width="390dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="35dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_null_image"/>
+
+            <TextView
+                android:id="@+id/text_view_name_game"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_view_copyright"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:paddingRight="12dp"
+                android:layout_marginLeft="212dp"
+                android:ems="12"
+                android:gravity="right"
+                android:text="@string/copyright_www_rawg_io"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

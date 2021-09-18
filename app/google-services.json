@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "60922027079",
+    "project_id": "gl-gamemobileapp",
+    "storage_bucket": "gl-gamemobileapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60922027079:android:6f3024fe42c310cfb76562",
+        "android_client_info": {
+          "package_name": "com.example.gl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60922027079-bq5uk7n55thf9nfffgqv3pg314s5hs73.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsUy7WQX8PHdiHl36m_is9tZoZEbWu9zI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60922027079-bq5uk7n55thf9nfffgqv3pg314s5hs73.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

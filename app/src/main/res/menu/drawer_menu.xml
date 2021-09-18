@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools = "http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+
+    <!-- Action Menu -->
+    <group android:checkableBehavior="single">
+
+        <!--  Main Menu -->
+        <item
+            android:id="@+id/navigator_main_menu"
+            android:icon="@drawable/ic_home"
+            android:title="@string/home"/>
+
+        <!--  Search -->
+        <item
+            android:id="@+id/navigator_search"
+            android:icon="@drawable/ic_search"
+            android:title="@string/search" />
+
+        <!--  All Games -->
+        <item
+            android:id="@+id/navigator_all_games"
+            android:icon="@drawable/top_games"
+            android:title="@string/games"/>
+
+        <!-- Top Games -->
+        <item
+            android:id="@+id/navigator_top_games"
+            android:icon="@drawable/top_games_star"
+            android:title="@string/top_games" />
+
+        <!-- Coming Soon -->
+        <item
+            android:id="@+id/navigator_cooming_soon"
+            android:icon="@drawable/coming_soon"
+            android:title="@string/coming_soon" />
+
+        <!-- Stroe -->
+        <item
+            android:id="@+id/navigator_store"
+            android:icon="@drawable/store"
+            android:title="@string/stores" />
+
+    </group>
+
+    <!-- For new "sub menu" -->
+    <item android:title="@string/communicate">
+
+        <menu>
+
+            <!--  About us -->
+            <item
+                android:id="@+id/navigator_about_us"
+                android:icon="@drawable/ic_about_us"
+                android:title="@string/about_us" />
+
+        </menu>
+
+    </item>
+
+</menu>
