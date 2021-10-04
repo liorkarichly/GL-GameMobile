@@ -5,7 +5,7 @@
    and developed in RESTful API. Our app relies on Rawg.io API database that contains 0.5 million console games, and
    Google Maps API for an easy location service for gaming stores in the vicinity. In short the app allows the user to
    search console games by name or by chosen filters and get all the relevant information about them or browse
-   recommended games that are refreshed daily.
+   recommended games that are refreshed daily. ##
 ### RAWG:  https://rawg.io 
 
 ## The open page in the application, and options to tour to another pages and diffrent categories.
