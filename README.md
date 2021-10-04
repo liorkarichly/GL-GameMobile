@@ -7,8 +7,11 @@
 ## The open page in the application, and options to tour to another pages and diffrent categories.
 ![main menu](https://user-images.githubusercontent.com/36056001/127822109-5666a1d8-af66-4cae-b6c6-ff69aa67d47a.png)
 
-## you have list of games
+## Lists of games
 ![game page](https://user-images.githubusercontent.com/36056001/127822294-140cf6a9-f0ee-4118-a5d5-4e234f537326.png)
 
-## you have options serach details about the game that you want according the publisher, range years, genre, platform or by the key words...
+## Options serach details about the game that you want according the publisher, range years, genre, platform or by the key words...
 ![search](https://user-images.githubusercontent.com/36056001/127822472-9bb3ef1a-9894-4734-a8fb-63026d841daf.png)
+
+## Games store near the user 
+![map](https://user-images.githubusercontent.com/36056001/135849323-da0c8d81-58b0-4950-8277-6ac43237f73e.png)
