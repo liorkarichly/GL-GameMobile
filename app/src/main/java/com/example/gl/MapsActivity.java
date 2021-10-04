@@ -1,6 +1,7 @@
 package com.example.gl;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -31,6 +32,7 @@ import com.example.gl.googleApiMaps.IOnFinishedListenerCallback;
 import com.example.gl.googleApiMaps.ParseFromJson;
 import com.example.gl.googleApiMaps.PlaceByIDModel;
 import com.example.gl.googleApiMaps.PopUpWindowClass;
+import com.example.gl.googleApiMaps.SortByDistance;
 import com.example.gl.googleApiMaps.StoresPlaces;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -52,7 +54,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback
@@ -353,6 +355,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
+                    Log.d(TAG, "getDevicesLocation: getting the devices current location 2");
                     return;
 
                 }
@@ -497,11 +500,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     m_ViewPopUp = v;
                     // position will give us the index of which place was selected in the array
-//                    LatLng markerLatLng = m_LikelyPlaceLatLngs[position];
-//                    String markerName = m_LikelyPlaceNames[position];
-//
-//                    // Position the map's camera at the location of the marker.
-//                    moveCamera(markerLatLng, DEFAULT_ZOOM, markerName);
 
                     LatLng markerLatLng = new LatLng(Double.parseDouble(m_StoresPlaceByMyArea.get(position).getGeometry().getLocation().getLatitude()),
                             Double.parseDouble( m_StoresPlaceByMyArea.get(position).getGeometry().getLocation().getLongitude()));
@@ -514,7 +512,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     try
                     {
 
-                       // String url = getStoreDetails(m_LikelyPlaceId[position]);
                         String url = getStoreDetails(m_StoresPlaceByMyArea.get(position).getPlace_id());
 
                         new PlaceTask(true, new IOnFinishedListenerCallback()
@@ -596,6 +593,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     /**
      * Click listener on button range and call back the place in radius
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View view)
     {
@@ -689,7 +687,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     /**
-     * Return Details By ID
+     * Return Place Details By ID
      */
     private PlaceByIDModel GetPlaceDetailsByID(String response) {
 
@@ -772,6 +770,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         }
 
+        @SuppressLint("DefaultLocale")
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         protected void onPostExecute(List<StoresPlaces> storesPlaces)
@@ -807,7 +806,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
 
-            m_StoresPlaceByMyArea.sort(Comparator.comparing(x -> x.getDistance()));//sort by distance
+
+            Collections.sort(m_StoresPlaceByMyArea, new SortByDistance());//sort by distance
             getCurrentPlaceLikelihoods();
 
         }

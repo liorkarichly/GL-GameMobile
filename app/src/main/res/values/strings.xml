@@ -16,7 +16,6 @@
     <string name="gener">Gener</string>
     <string name="articels">Articels</string>
     <string name="main_menu">Main Menu</string>
-    <string name="see_all_articles">See All Articles</string>
     <string name="see_all_trailers">See All Trailers</string>
     <string name="see_all">See All</string>
     <string name="see_all_top_game">See All Top Game</string>
@@ -68,7 +67,7 @@
     <string name="developrs">Developrs</string>
     <string name="stores">Stores</string>
     <string name="title_activity_show_maps">Map</string>
-    <string name="api_key_google">-oBPo</string>
+    <string name="api_key_google"></string>
     <string name="app_curent_name">Current Place</string>
     <string name="title_activity_maps">Map</string>
     <string name="action_geolocate">Pick Place</string>

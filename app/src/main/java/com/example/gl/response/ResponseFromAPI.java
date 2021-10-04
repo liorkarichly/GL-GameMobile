@@ -1,25 +1,22 @@
 package com.example.gl.response;
 
-import android.app.ExpandableListActivity;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.example.gl.apiClient.ApiClient;
+import com.example.gl.mainActivity.eExtantionType;
 import com.example.gl.model.DevelopersModel;
 import com.example.gl.model.GameModel;
 import com.example.gl.model.GameSingleModel;
 import com.example.gl.model.GenresModel;
 import com.example.gl.model.PlatformModel;
 import com.example.gl.model.PublisherModel;
-import com.example.gl.mainActivity.*;
 import com.example.gl.model.TrailersModel;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
