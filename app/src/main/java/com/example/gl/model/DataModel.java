@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 public class DataModel implements Serializable
 {
+    //Trailer game, quality
 
     @SerializedName("max")
     @Expose

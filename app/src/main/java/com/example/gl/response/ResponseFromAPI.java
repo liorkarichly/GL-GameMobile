@@ -37,49 +37,50 @@ import retrofit2.Response;
 public class ResponseFromAPI
 {
 
-    private final String API_KEY = "";
+    private final String API_KEY = "9dff30a883ca4236af73ad04b0ca088f";
 
-    private List<GameModel> m_ListGameModel;
-    private List<GameModel> m_ListTopGameModel;
-    private List<GameModel> m_ListCoomingSoonGameModel;
-    private List<PlatformModel> m_ListPlatformModel;
-    private List<PublisherModel> m_ListPublishersModel;
-    private List<DevelopersModel> m_ListDevelopersModel;
-    private List<GameModel> m_GameList;
-    private List<GenresModel> m_GenresList;
-    private List<TrailersModel> m_ListTrailersModel;
+    private List<GameModel> mListGameModel;
+    private List<GameModel> mListTopGameModel;
+    private List<GameModel> mListCoomingSoonGameModel;
 
+    private List<PlatformModel> mListPlatformModel;
+    private List<PublisherModel> mListPublishersModel;
+    private List<DevelopersModel> mListDevelopersModel;
+    private List<GameModel> mGameList;
+    private List<GenresModel> mGenresList;
+    private List<TrailersModel> mListTrailersModel;
 
-    private String m_Today;
-    private String m_NextMonth;
-    private String m_PrevMonth;
+    private String mToday;
+    private String mNextMonth;
+    private String mPreviousMonth;
+    private String mTime;
 
-    private static ResponseFromAPI s_instance = null;
+    private volatile static ResponseFromAPI vsInstanceResponseAPI = null;
 
-    private String m_Genres;
-    private Integer m_Page;
-    private Integer m_PageSize;
-    private String m_Platforms;
-    private String m_Developers;
-    private String m_Publishers;
-    private String m_Dates;
-    private String m_Ordering;
-    private String m_Search;
+    private String mGenres;
+    private int mPage;
+    private int mPageSize;
+    private String mPlatforms;
+    private String mDevelopers;
+    private String mPublishers;
+    private String mDates;
+    private String mOrdering;
+    private String mSearch;
 
-    private static ReentrantLock s_Lock = new ReentrantLock();//lock and unlock
+    private static ReentrantLock sLock = new ReentrantLock();//Lock and unlock
 
     private ResponseFromAPI()
     {
 
-        m_ListGameModel = new ArrayList<>();
-        m_ListDevelopersModel = new ArrayList<>();
-        m_ListTopGameModel = new ArrayList<>();
-        m_ListCoomingSoonGameModel = new ArrayList<>();
-        m_ListPlatformModel = new ArrayList<>();
-        m_ListPublishersModel = new ArrayList<>();
-        m_GameList = new ArrayList<>();
-        m_GenresList = new ArrayList<>();
-        m_ListTrailersModel = new ArrayList<>();
+        mListGameModel = new ArrayList<>();
+        mListDevelopersModel = new ArrayList<>();
+        mListTopGameModel = new ArrayList<>();
+        mListCoomingSoonGameModel = new ArrayList<>();
+        mListPlatformModel = new ArrayList<>();
+        mListPublishersModel = new ArrayList<>();
+        mGameList = new ArrayList<>();
+        mGenresList = new ArrayList<>();
+        mListTrailersModel = new ArrayList<>();
 
         getTime();
         clearMembers();
@@ -87,34 +88,55 @@ public class ResponseFromAPI
     }
 
     //Get instance
-    public static ResponseFromAPI getInstance(){
+    public static ResponseFromAPI getInstance()
+    {
 
-        s_Lock.lock();
+        /**
+         * Double check lock - We have 2 checkes if the instance is null and we put lock synchronized
+         * and its one of the soluation for this but is not the best practice because the Java memory
+         * model allows the publication of partially initialized objects and this may lead in turn to
+         * subtle bugs.
+         * ReentrantLock - We use this when we want to perform lock with synchronized operation
+         * s a mutual exclusion lock with the same basic behavior as the implicit
+         * monitors accessed via the synchronized keyword but with extended capabilities.
+         * As the name suggests this lock implements reentrant characteristics just as implicit monitors.
+         * We useing in lock and unlock and its better for operation in thread-seaf because if another
+         * thread has already acquired the lock subsequent calls to lock() pause the current thread until
+         * the lock has been unlocked.
+         * Only one thread can hold the lock at any given time.
+         * Is our choose to use :)
+         * Value volatile - keyword, changed value of diffrent threads, its mean when we hace a multiple threads
+         * we can use a methods instance of the classes at  the same time without any problem.
+         * */
+        //Lock
+        sLock.lock();
 
+        //try and finally for to ensure unlocking in case of exceptions.
         try
         {
 
-            if (s_instance == null)
+            if (vsInstanceResponseAPI == null)
             {
 
-                s_instance = new ResponseFromAPI();
+                vsInstanceResponseAPI = new ResponseFromAPI();
 
             }
 
-            return s_instance;
+            return vsInstanceResponseAPI;
 
         }
         finally
         {
 
-            s_Lock.unlock();
+            sLock.unlock();
 
         }
 
     }
 
     //Search the game by id or slug
-    public void GetGameById(String i_GameIdOrSulg, @Nullable IMyCallback i_MyCallback){
+    public void GetGameById(String i_GameIdOrSulg, @Nullable IMyCallback i_MyCallback)
+    {
 
         Call<GameSingleModel> call = ApiClient.getInstance().getApi().getGameById(i_GameIdOrSulg, API_KEY);
 
@@ -177,18 +199,19 @@ public class ResponseFromAPI
             public void onResponse(Call<ResponseGenresModel> call, Response<ResponseGenresModel> response)
             {
 
-                if (response.isSuccessful()  && response.body() != null) {
+                if (response.isSuccessful()  && response.body() != null)
+                {
 
                     try
                     {
 
-                        m_GenresList.clear();
-                        m_GenresList = response.body().getResults();
+                        mGenresList.clear();
+                        mGenresList = response.body().getResults();
 
                         if (i_MyCallbackSpinner != null)
                         {
 
-                            i_MyCallbackSpinner.onSuccess(m_GenresList);
+                            i_MyCallbackSpinner.onSuccess(mGenresList);
 
                         }
 
@@ -211,7 +234,6 @@ public class ResponseFromAPI
                 if (t instanceof IOException)
                 {
 
-
                     i_MyCallbackSpinner.onError(t);
 
                 }
@@ -229,24 +251,28 @@ public class ResponseFromAPI
     }
 
     //Get list of name platforms
-    public void GetListPlatformsName(@Nullable IMyCallback i_MyCallbackSpinner) {
+    public void GetListPlatformsName(@Nullable IMyCallback i_MyCallbackSpinner)
+    {
 
-        Call<ResponsePlatformModel> call = ApiClient.getInstance().getApi().getListPlatforms(m_Page, API_KEY);
+        Call<ResponsePlatformModel> call = ApiClient.getInstance().getApi().getListPlatforms(mPage, API_KEY);
 
-        call.enqueue(new Callback<ResponsePlatformModel>() {
+        call.enqueue(new Callback<ResponsePlatformModel>()
+        {
+
             @Override
-            public void onResponse(Call<ResponsePlatformModel> call, Response<ResponsePlatformModel> response) {
+            public void onResponse(Call<ResponsePlatformModel> call, Response<ResponsePlatformModel> response)
+            {
 
                 if (response.body() != null && response.isSuccessful())
                 {
 
-                    m_ListPlatformModel.clear();
-                    m_ListPlatformModel = response.body().getResults();
+                    mListPlatformModel.clear();
+                    mListPlatformModel = response.body().getResults();
 
                     if (i_MyCallbackSpinner != null)
                     {
 
-                        i_MyCallbackSpinner.onSuccess(m_ListPlatformModel);
+                        i_MyCallbackSpinner.onSuccess(mListPlatformModel);
 
                     }
 
@@ -255,7 +281,8 @@ public class ResponseFromAPI
             }
 
             @Override
-            public void onFailure(Call<ResponsePlatformModel> call, Throwable t) {
+            public void onFailure(Call<ResponsePlatformModel> call, Throwable t)
+            {
 
                 if (t instanceof IOException)
                 {
@@ -271,7 +298,6 @@ public class ResponseFromAPI
 
                 }
 
-
             }
 
         });
@@ -279,27 +305,31 @@ public class ResponseFromAPI
     }
 
     //Get list of name publishers
-    public void GetListPublishersName(@NonNull IMyCallback i_MyCallbackSpinner){
+    public void GetListPublishersName(@NonNull IMyCallback i_MyCallbackSpinner)
+    {
 
-        Call<ResponsePublisherModel> call = ApiClient.getInstance().getApi().getListPublishers(m_Page, API_KEY);
+        Call<ResponsePublisherModel> call = ApiClient.getInstance().getApi().getListPublishers(mPage, API_KEY);
 
-        call.enqueue(new Callback<ResponsePublisherModel>() {
+        call.enqueue(new Callback<ResponsePublisherModel>()
+        {
+
             @Override
-            public void onResponse(Call<ResponsePublisherModel> call, Response<ResponsePublisherModel> response) {
+            public void onResponse(Call<ResponsePublisherModel> call, Response<ResponsePublisherModel> response)
+            {
 
-
-                try{
+                try
+                {
 
                     if (response.body() != null && response.isSuccessful())
                     {
 
-                        m_ListPublishersModel.clear();
-                        m_ListPublishersModel = response.body().getResults();
+                        mListPublishersModel.clear();
+                        mListPublishersModel = response.body().getResults();
 
                         if (i_MyCallbackSpinner != null)
                         {
 
-                            i_MyCallbackSpinner.onSuccess(m_ListPublishersModel);
+                            i_MyCallbackSpinner.onSuccess(mListPublishersModel);
 
                         }
 
@@ -319,7 +349,6 @@ public class ResponseFromAPI
                 if (t instanceof IOException)
                 {
 
-
                     i_MyCallbackSpinner.onError(t);
 
                 }
@@ -330,8 +359,8 @@ public class ResponseFromAPI
 
                 }
 
-
             }
+
         });
 
     }
@@ -339,7 +368,7 @@ public class ResponseFromAPI
     //Get list of name publishers
     public void GetListDeveloprsName(@NonNull IMyCallback i_MyCallbackSpinner){
 
-        Call<ResponseDevelopersModel> call = ApiClient.getInstance().getApi().getListDevelopers( API_KEY, m_Page);
+        Call<ResponseDevelopersModel> call = ApiClient.getInstance().getApi().getListDevelopers( API_KEY, mPage);
 
         call.enqueue(new Callback<ResponseDevelopersModel>() {
             @Override
@@ -349,12 +378,12 @@ public class ResponseFromAPI
 
                     try{
 
-                        m_ListDevelopersModel.clear();
-                        m_ListDevelopersModel = response.body().getResults();
+                        mListDevelopersModel.clear();
+                        mListDevelopersModel = response.body().getResults();
 
                         if (i_MyCallbackSpinner != null){
 
-                            i_MyCallbackSpinner.onSuccess(m_ListDevelopersModel);
+                            i_MyCallbackSpinner.onSuccess(mListDevelopersModel);
 
                         }
 
@@ -398,7 +427,7 @@ public class ResponseFromAPI
 
         // call from rawg api
         Call<ResponseGameModel> call = ApiClient.getInstance().getApi().getGames(API_KEY, String.valueOf(i_Page),
-                String.valueOf(m_PageSize), m_Genres, m_Platforms, m_Developers, m_Publishers, m_Dates, m_Ordering, m_Search);
+                String.valueOf(mPageSize), mGenres, mPlatforms, mDevelopers, mPublishers, mDates, mOrdering, mSearch);
 
 
         call.enqueue(new Callback<ResponseGameModel>() {
@@ -408,12 +437,12 @@ public class ResponseFromAPI
 
                     if (response.body() != null && response.isSuccessful()) {
 
-                        m_ListGameModel.clear();
-                        m_ListGameModel = response.body().getResults();
+                        mListGameModel.clear();
+                        mListGameModel = response.body().getResults();
 
                         if (i_MyCallback != null) {//send the list top game for fragment
 
-                            i_MyCallback.onSuccess(m_ListGameModel);
+                            i_MyCallback.onSuccess(mListGameModel);
                         }
 
                     }
@@ -444,9 +473,11 @@ public class ResponseFromAPI
     public void GetTopGames(@Nullable IMyCallback i_MyCallback, int i_Page)
     {
 
+        mTime = String.format(mPreviousMonth + "," + mToday);
+
         // call from rawg api
         Call<ResponseGameModel> call = ApiClient.getInstance().getApi().getGames(API_KEY, String.valueOf(i_Page),
-                String.valueOf(m_PageSize), m_Genres, m_Platforms, m_Developers, m_Publishers, String.format(m_PrevMonth + "," + m_Today), "-added", m_Search);
+                String.valueOf(mPageSize), mGenres, mPlatforms, mDevelopers, mPublishers, mTime, "-added", mSearch);
 
 
         call.enqueue(new Callback<ResponseGameModel>()
@@ -457,13 +488,13 @@ public class ResponseFromAPI
 
                 if (response.body() != null && response.isSuccessful()) {
 
-                    m_ListTopGameModel.clear();
-                    m_ListTopGameModel = response.body().getResults();
+                    mListTopGameModel.clear();
+                    mListTopGameModel = response.body().getResults();
 
                     if (i_MyCallback != null)
                     {
                         //send the list top game for fragment
-                        i_MyCallback.onSuccess(m_ListTopGameModel);
+                        i_MyCallback.onSuccess(mListTopGameModel);
 
                     }
 
@@ -496,14 +527,14 @@ public class ResponseFromAPI
     }
 
     //Get cooming soon games
-    public void GetCoomingSoonGames(@Nullable IMyCallback i_MyCallback, int i_Page)
+    public void GetComingSoonGames(@Nullable IMyCallback i_MyCallback, int i_Page)
     {
 
-        String time = String.format(m_Today + "," +m_NextMonth );
+        mTime = String.format(mToday + "," + mNextMonth);
 
         // call from rawg api
         Call<ResponseGameModel> call = ApiClient.getInstance().getApi().getGames(API_KEY, String.valueOf(i_Page),
-                String.valueOf(m_PageSize), m_Genres, m_Platforms, m_Developers, m_Publishers, time, "-added",  m_Search);
+                String.valueOf(mPageSize), mGenres, mPlatforms, mDevelopers, mPublishers, mTime, "-added", mSearch);
 
 
         call.enqueue(new Callback<ResponseGameModel>() {
@@ -514,14 +545,14 @@ public class ResponseFromAPI
                 if (response.body() != null && response.isSuccessful())
                 {
 
-                         m_ListCoomingSoonGameModel.clear();
-                         m_ListCoomingSoonGameModel = response.body().getResults();
+                         mListCoomingSoonGameModel.clear();
+                         mListCoomingSoonGameModel = response.body().getResults();
 
                            if (i_MyCallback != null)
                            {
 
                                //send the list cooming soon game for fragment
-                               i_MyCallback.onSuccess(m_ListCoomingSoonGameModel);
+                               i_MyCallback.onSuccess(mListCoomingSoonGameModel);
 
                            }
                 }
@@ -574,26 +605,26 @@ public class ResponseFromAPI
                 {
 
                     case Genre:
-                        m_Genres = type.getValue();
+                        mGenres = type.getValue();
 
                         break;
 
                     case Platform:
-                        m_Platforms = type.getValue();
+                        mPlatforms = type.getValue();
 
                         break;
 
                     case Publisher:
-                        m_Publishers = type.getValue();
+                        mPublishers = type.getValue();
 
                         break;
 
                     case ReleaseDate:
-                        m_Dates = type.getValue();
+                        mDates = type.getValue();
 
                         break;
                     case Developrs:
-                        m_Developers = type.getValue();
+                        mDevelopers = type.getValue();
 
                         break;
 
@@ -609,12 +640,12 @@ public class ResponseFromAPI
         {
 
              i_Search = i_Search.replace(' ', '-').toLowerCase();
-             m_Search = i_Search;
+             mSearch = i_Search;
 
         }
 
-            Call<ResponseGameModel> call = ApiClient.getInstance().getApi().getGames(API_KEY, String.valueOf(m_Page),
-                    String.valueOf(m_PageSize), m_Genres, m_Platforms, m_Developers, m_Publishers,  m_Dates, m_Ordering, m_Search);
+            Call<ResponseGameModel> call = ApiClient.getInstance().getApi().getGames(API_KEY, String.valueOf(mPage),
+                    String.valueOf(mPageSize), mGenres, mPlatforms, mDevelopers, mPublishers, mDates, mOrdering, mSearch);
 
             i_HashMap = null;
             clearMembers();
@@ -631,12 +662,12 @@ public class ResponseFromAPI
                         if (response.body() != null && response.isSuccessful())
                         {
 
-                            m_GameList.clear();// clear the list game
-                            m_GameList = response.body().getResults();//result of games
+                            mGameList.clear();// clear the list game
+                            mGameList = response.body().getResults();//result of games
 
                             if (i_MyCallback != null) {
 
-                                i_MyCallback.onSuccess(m_GameList);
+                                i_MyCallback.onSuccess(mGameList);
 
                             }
 
@@ -692,7 +723,7 @@ public class ResponseFromAPI
                 if (response.body() != null && response.isSuccessful())
                 {
 
-                        m_ListTrailersModel =  response.body().getResults();
+                        mListTrailersModel =  response.body().getResults();
 
                         if (i_MyCallback != null)
                         {
@@ -700,7 +731,7 @@ public class ResponseFromAPI
                             try
                              {
 
-                                 i_MyCallback.onSuccessTrailers(m_ListTrailersModel);
+                                 i_MyCallback.onSuccessTrailers(mListTrailersModel);
 
                             }
                              catch (Exception e)
@@ -732,16 +763,16 @@ public class ResponseFromAPI
     private void clearMembers()
     {
 
-            m_Platforms = null;
-            m_Developers = null;
-            m_Publishers = null;
-            m_Dates = null;
-            m_Ordering = null;
-            m_Search = null;
-            m_Search = null;
-            m_Genres = null;
-            m_Page = 1;
-            m_PageSize = 30;
+            mPlatforms = null;
+            mDevelopers = null;
+            mPublishers = null;
+            mDates = null;
+            mOrdering = null;
+            mSearch = null;
+            mSearch = null;
+            mGenres = null;
+            mPage = 1;
+            mPageSize = 30;
 
         }
 
@@ -755,15 +786,15 @@ public class ResponseFromAPI
 
               // Set your date format
              SimpleDateFormat foramtDate = new SimpleDateFormat("yyyy-MM-dd");
-             m_Today = foramtDate.format(date);
+             mToday = foramtDate.format(date);
 
             calendar.setTime(date);
             calendar.add(Calendar.DAY_OF_YEAR, 30);
-            m_NextMonth = foramtDate.format(calendar.getTime());
+            mNextMonth = foramtDate.format(calendar.getTime());
 
             calendar.setTime(date);
             calendar.add(Calendar.DAY_OF_YEAR, -30);
-            m_PrevMonth = foramtDate.format(calendar.getTime());
+            mPreviousMonth = foramtDate.format(calendar.getTime());
 
         }
 

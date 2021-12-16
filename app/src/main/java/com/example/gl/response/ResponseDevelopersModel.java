@@ -47,4 +47,5 @@ public class ResponseDevelopersModel extends Responses
     public void setPrevious(String previous) {
         super.setPrevious(previous);
     }
+
 }

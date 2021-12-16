@@ -29,10 +29,10 @@ import java.util.List;
 public final class ManagerCallsFromAPI implements Serializable
 {
 
-    private List<GameModel> m_ListGameModel = new ArrayList<>();
+    private List<GameModel> mListGameModel = new ArrayList<>();
 
     public List<GameModel> getM_ListGameModel() {
-        return m_ListGameModel;
+        return mListGameModel;
     }
 
     //Call from Respond api to all game
@@ -46,13 +46,14 @@ public final class ManagerCallsFromAPI implements Serializable
             public <T> void onSuccess(@NonNull List<T> games)
             {
 
+                //main menu
                 if (i_FlagMainMenuOrFragment)
                 {
 
                     featchDataToRecycleViewOfGames(R.id.recycle_view_all_games, (List<GameModel>)games, i_Root, i_ViewGroup);
 
                 }
-                else
+                else// fragment all games
                 {
 
                     featchDataToRecycleViewOfGamesMainMenu(R.id.recycle_view_all_games, (List<GameModel>)games, i_Root, i_ViewGroup);
@@ -73,7 +74,7 @@ public final class ManagerCallsFromAPI implements Serializable
                 Toast.makeText(i_Root.getContext(), throwable.toString(), Toast.LENGTH_SHORT).show();
 
             }
-
+            //Page number
         }, i_PageNumber);
 
     }
@@ -89,13 +90,14 @@ public final class ManagerCallsFromAPI implements Serializable
             public <T> void onSuccess(@NonNull List<T> games)
             {
 
+                //Main menu
                 if (i_FlagMainMenuOrFragment)
                 {
 
                     featchDataToRecycleViewOfGames(R.id.recycle_view_top_game, (List<GameModel>)games, i_Root, i_ViewGroup);
 
                 }
-                else
+                else//Top game
                  {
 
                     featchDataToRecycleViewOfGamesMainMenu(R.id.recycle_view_top_game, (List<GameModel>)games, i_Root, i_ViewGroup);
@@ -117,30 +119,31 @@ public final class ManagerCallsFromAPI implements Serializable
                 Toast.makeText(i_Root.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
-
+            //Page number
         }, i_PageNumber);
 
     }
 
-    //Call from Respond api to cooming soon game
+    //Call from Respond api to coming soon game
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void CallToCoomingSoonGame(int i_PageNumber, View i_Root, ViewGroup i_ViewGroup, boolean i_FlagMainMenuOrFragment)
     {
 
-        ResponseFromAPI.getInstance().GetCoomingSoonGames(new IMyCallback()
+        ResponseFromAPI.getInstance().GetComingSoonGames(new IMyCallback()
         {
 
             @Override
             public <T> void onSuccess(@NonNull List<T> games)
             {
 
+                //Main menu
                 if (i_FlagMainMenuOrFragment)
                 {
 
                     featchDataToRecycleViewOfGames(R.id.recycler_view_cooming_soon_game, (List<GameModel>)games, i_Root, i_ViewGroup);
 
                 }
-                else
+                else//Coming soon
                 {
 
                     featchDataToRecycleViewOfGamesMainMenu(R.id.recycler_view_cooming_soon_game, (List<GameModel>)games, i_Root, i_ViewGroup);
@@ -162,7 +165,7 @@ public final class ManagerCallsFromAPI implements Serializable
                 Toast.makeText(i_Root.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
-
+        //Page number
         }, i_PageNumber);
 
     }
@@ -223,7 +226,7 @@ public final class ManagerCallsFromAPI implements Serializable
                 Toast.makeText(i_Root.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
-
+        //Filter search, name game
         },i_HashMap, i_Search);
 
     }
@@ -247,10 +250,10 @@ public final class ManagerCallsFromAPI implements Serializable
     {
 
             RecyclerView m_RecycleViewGames;
-            m_ListGameModel.addAll(i_ListGame);
+            mListGameModel.addAll(i_ListGame);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(i_Root.getContext(), LinearLayoutManager.VERTICAL, false);
             m_RecycleViewGames = i_Root.findViewById(i_TheRecycleView);
-            AdapterGameModel adapterGameModel = new AdapterGameModel(m_ListGameModel, i_ViewGroup.getContext());
+            AdapterGameModel adapterGameModel = new AdapterGameModel(mListGameModel, i_ViewGroup.getContext());
             m_RecycleViewGames.setLayoutManager(linearLayoutManager);
             m_RecycleViewGames.setAdapter(adapterGameModel);
 

@@ -3,9 +3,6 @@ package com.example.gl.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +13,8 @@ import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.gl.R;
 import com.example.gl.model.TrailersModel;
@@ -35,14 +34,12 @@ public class ShowTrailers extends Fragment {
     private static final String KEY_SHOW_TRAILER = "SHOW_TRAILER";
 
     // TODO: Rename and change types of parameters
-    private List<TrailersModel> showTrailers;
-    private TextView m_TextFromWeb;
-    private VideoView m_VideoView;
-    private ListView m_ListViewForVideo;
-    private List<String> m_ListViewNames = new ArrayList<>();
-    private ArrayAdapter m_AdapterStringsName;
-
-
+    private List<TrailersModel> mShowTrailers;
+    private TextView mTextFromWeb;
+    private VideoView mVideoView;
+    private ListView mListViewForVideo;
+    private List<String> mListViewNames = new ArrayList<>();
+    private ArrayAdapter mAdapterStringsName;
 
     public ShowTrailers() {
         // Required empty public constructor
@@ -73,6 +70,7 @@ public class ShowTrailers extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View root =  inflater.inflate(R.layout.fragment_show_trailers, container, false);
 
@@ -80,43 +78,43 @@ public class ShowTrailers extends Fragment {
         if (savedInstanceState != null)
         {
 
-            m_ListViewForVideo = (ListView)root.findViewById(R.id.list_view_movie);
-            m_VideoView = (VideoView)root.findViewById(R.id.trailer_movie);
-            m_TextFromWeb = (TextView)root.findViewById(R.id.rawg_api_web);
-            MediaController mediaController = new MediaController(root.getContext());
+            mListViewForVideo = (ListView)root.findViewById(R.id.list_view_movie);
+            mVideoView = (VideoView)root.findViewById(R.id.trailer_movie);
+            mTextFromWeb = (TextView)root.findViewById(R.id.rawg_api_web);
+            MediaController mediaController = new MediaController(root.getContext());//Show the video
 
-            showTrailers = (List<TrailersModel>) getArguments().getSerializable(KEY_SHOW_TRAILER);
-            m_ListViewNames.clear();
+            mShowTrailers = (List<TrailersModel>) getArguments().getSerializable(KEY_SHOW_TRAILER);
+            mListViewNames.clear();
 
-            for (TrailersModel trailersModel : showTrailers) {
+            //Print the trailer in listView
+            for (TrailersModel trailersModel : mShowTrailers) {
 
                 Log.d("Name", trailersModel.getName());
                 Log.d("ID", String.valueOf(trailersModel.getId()));
                 Log.d("Data", String.valueOf(trailersModel.getData().getMax()));
-                m_ListViewNames.add(trailersModel.getName());
-
+                mListViewNames.add(trailersModel.getName());
 
             }
 
-            m_AdapterStringsName = new ArrayAdapter(root.getContext(), R.layout.trailer_text_view, m_ListViewNames);
-            m_ListViewForVideo.setAdapter(m_AdapterStringsName);
+            mAdapterStringsName = new ArrayAdapter(root.getContext(), R.layout.trailer_text_view, mListViewNames);
+            mListViewForVideo.setAdapter(mAdapterStringsName);
 
-            m_ListViewForVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            mListViewForVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-              m_VideoView.setVideoURI(Uri.parse(showTrailers.get(i).getData().getMax()));
-              m_VideoView.setMediaController(mediaController);
-              mediaController.setAnchorView(m_VideoView);
-              m_VideoView.requestFocus();
-              m_VideoView.start();
+              mVideoView.setVideoURI(Uri.parse(mShowTrailers.get(i).getData().getMax()));
+              mVideoView.setMediaController(mediaController);
+              mediaController.setAnchorView(mVideoView);
+              mVideoView.requestFocus();
+              mVideoView.start();
 
             }
         });
 
         }
 
-        m_TextFromWeb.setOnClickListener(view -> GoToURL(m_TextFromWeb.getText().toString()));
+        mTextFromWeb.setOnClickListener(view -> GoToURL(mTextFromWeb.getText().toString()));
 
         return root;
     }
@@ -128,4 +126,5 @@ public class ShowTrailers extends Fragment {
         startActivity(new Intent(Intent.ACTION_VIEW, uri));
 
     }
+
 }

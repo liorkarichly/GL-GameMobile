@@ -25,14 +25,19 @@ import com.example.gl.response.ResponseFromAPI;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
+/** We create this adapter for card view and we want to present on the screen  */
 public class AdapterGameModel extends RecyclerView.Adapter<AdapterGameModel.ViewHolder>
 {
 
+    /** Key for send to other fragment  (GameSingle)*/
     private final String KEY_GAME_BY_ID = "GAME_BY_ID";
+
+    /** List response*/
     private List<GameModel> m_GameModelList;
+
+    /** Screen to send*/
     private Context m_NewContext;
 
     public AdapterGameModel(List<GameModel> i_GameModelList, Context i_NewContext)
@@ -48,6 +53,7 @@ public class AdapterGameModel extends RecyclerView.Adapter<AdapterGameModel.View
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
 
+        //Get the card view, location of the card view in program and send for set the values in card
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
 
         return new ViewHolder(view);
@@ -66,6 +72,7 @@ public class AdapterGameModel extends RecyclerView.Adapter<AdapterGameModel.View
         //Set image of the game
         String imgaeURL = games.getBackground_image();
 
+        //Statment picture profile game if had or not
         if (imgaeURL != null)
         {
 
@@ -95,6 +102,7 @@ public class AdapterGameModel extends RecyclerView.Adapter<AdapterGameModel.View
             public void onClick(View v)
             {
 
+                //Get from api and send the id of the game when the user click about card view specific
                 ResponseFromAPI.getInstance().GetGameById(games.getId().toString(), new IMyCallback() {
 
                     @Override
@@ -102,6 +110,7 @@ public class AdapterGameModel extends RecyclerView.Adapter<AdapterGameModel.View
 
                     }
 
+                    //Get full details game by id
                     @Override
                     public void onSuccess(@NonNull GameSingleModel gamesSingle)
                     {
@@ -115,6 +124,7 @@ public class AdapterGameModel extends RecyclerView.Adapter<AdapterGameModel.View
 
                     }
 
+                    //Response error to screen
                     @Override
                     public void onError(@NonNull Throwable throwable)
                     {
@@ -142,6 +152,7 @@ public class AdapterGameModel extends RecyclerView.Adapter<AdapterGameModel.View
 
     }
 
+    /** Get size of list games*/
     @Override
     public int getItemCount()
     {
@@ -150,6 +161,7 @@ public class AdapterGameModel extends RecyclerView.Adapter<AdapterGameModel.View
 
     }
 
+    /** Create the card on the screen and set the name, image and the cardView  */
     public class ViewHolder extends RecyclerView.ViewHolder
     {
 

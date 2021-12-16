@@ -54,7 +54,6 @@ public interface IApiServerRequests
 
     @GET("developers")
     Call<ResponseDevelopersModel> getListDevelopers(
-
             @Query("key")  String apiKey,
             @Query("page") @Nullable Integer page
 
@@ -62,7 +61,6 @@ public interface IApiServerRequests
 
     @GET("games/{id}/movies")
     Call<ResponseTrailersModel> getListTrialers(
-
             @Path("id") String id,
             @Query("key") String apiKey
 

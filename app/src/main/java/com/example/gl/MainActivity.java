@@ -21,9 +21,9 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DrawerLayout m_DrawerLayout;
-    private NavigationView m_NavigationView;
-    private final ManagerApp m_ManagerApp = new ManagerApp();
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
+    private final ManagerApp mManagerApp = new ManagerApp();
     private static final String TAG = "MainActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
 
@@ -38,23 +38,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setSupportActionBar(toolbar);
 
-        m_DrawerLayout = findViewById(R.id.drawer_layout);
-        m_NavigationView = findViewById(R.id.Navigator_view);
-        m_NavigationView.setNavigationItemSelectedListener(this);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mNavigationView = findViewById(R.id.Navigator_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
-                m_DrawerLayout, toolbar,
+                mDrawerLayout, toolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
 
-        m_DrawerLayout.addDrawerListener(toggle);
+        mDrawerLayout.addDrawerListener(toggle);
 
         toggle.syncState();
 
         if(savedInstanceState == null)
         {
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, m_ManagerApp.GetMainMenu()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mManagerApp.GetMainMenu()).commit();
 
         }
 
@@ -64,10 +64,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed()
     {
 
-        if (m_DrawerLayout.isDrawerOpen(GravityCompat.START))
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
         {
 
-            m_DrawerLayout.closeDrawer(GravityCompat.START);
+            mDrawerLayout.closeDrawer(GravityCompat.START);
 
         }
         else
@@ -88,22 +88,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
 
             case R.id.navigator_main_menu:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,  m_ManagerApp.GetMainMenu()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,  mManagerApp.GetMainMenu()).addToBackStack(null).commit();
                 break;
             case R.id.navigator_search:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,  m_ManagerApp.GetSearch()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,  mManagerApp.GetSearch()).addToBackStack(null).commit();
                 break;
             case R.id.navigator_all_games:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,   m_ManagerApp.GetGames()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,   mManagerApp.GetGames()).addToBackStack(null).commit();
                 break;
             case R.id.navigator_top_games:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, m_ManagerApp.GetTopGames()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mManagerApp.GetTopGames()).addToBackStack(null).commit();
                 break;
             case R.id.navigator_cooming_soon:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,  m_ManagerApp.GetCoomingSoon()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,  mManagerApp.GetCoomingSoon()).addToBackStack(null).commit();
                 break;
             case R.id.navigator_about_us:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, m_ManagerApp.GetAboutUs()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mManagerApp.GetAboutUs()).addToBackStack(null).commit();
                 break;
             case R.id.navigator_store:
                 if (isServicesOK())
@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Intent intent = new Intent(this, MapsActivity.class);
                     startActivity(intent);
                     break;
+
                 }
                 else
                 {
@@ -119,22 +120,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(this, "Try Later", Toast.LENGTH_LONG).show();
 
                 }
+
                     break;
 
         }
 
-        m_DrawerLayout.closeDrawer(GravityCompat.START);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
 
     }
 
-    public boolean isServicesOK(){
+    /** Get access to google maps api*/
+    public boolean isServicesOK()
+    {
 
         Log.d(TAG, "isServicesOK: checking google services version");
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
         boolean isNotWorking = false;
 
-        if (available == ConnectionResult.SUCCESS){
+        if (available == ConnectionResult.SUCCESS)
+        {
 
             Log.d(TAG, "isServicesOK: Google play services is working");
             return !isNotWorking;

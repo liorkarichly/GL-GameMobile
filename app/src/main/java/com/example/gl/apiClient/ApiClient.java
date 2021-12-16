@@ -17,6 +17,7 @@ public class ApiClient
 
     }
 
+    /** Singelton synchronized call api*/
     public static synchronized ApiClient getInstance()
     {
 
@@ -30,8 +31,12 @@ public class ApiClient
         return apiClient;
     }
 
-    public IApiServerRequests getApi(){
+    /** Property */
+    public IApiServerRequests getApi()
+    {
+
         return retrofit.create(IApiServerRequests.class);
+
     }
 
 }

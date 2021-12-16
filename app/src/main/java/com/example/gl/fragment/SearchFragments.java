@@ -2,12 +2,6 @@ package com.example.gl.fragment;
 
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +13,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+
 import com.example.gl.R;
 import com.example.gl.mainActivity.eExtantionType;
 import com.example.gl.model.DevelopersModel;
@@ -28,8 +27,6 @@ import com.example.gl.model.PlatformModel;
 import com.example.gl.model.PublisherModel;
 import com.example.gl.response.IMyCallback;
 import com.example.gl.response.ResponseFromAPI;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,35 +45,34 @@ public class SearchFragments extends Fragment implements View.OnClickListener
     private final String KEY_HASH = "HASHMAP";
 
     //Spinners
-    public Spinner m_SpinnerGenres;
-    private Spinner m_SpinnerPlatforms;
-    private Spinner m_SpinnerPublisher;
-    private Spinner m_SpinnerReleaseFrom;
-    private Spinner m_SpinnerReleaseTo;
-    private Spinner m_SpinnerDeveloprs;
+    public Spinner mSpinnerGenres;
+    private Spinner mSpinnerPlatforms;
+    private Spinner mSpinnerPublisher;
+    private Spinner mSpinnerReleaseFrom;
+    private Spinner mSpinnerReleaseTo;
+    private Spinner mSpinnerDeveloprs;
 
-    private ViewGroup m_Cointener;
-    private EditText m_TextSearch;
-    private View m_RootView;
-    private LayoutInflater m_LayoutInflater;
+    private ViewGroup mCointener;
+    private EditText mTextSearch;
+    private View mRootView;
+    private LayoutInflater mLayoutInflater;
 
     //Buttons search and clear
-    private Button m_ButtonSearch;
-    private Button m_ButtonClear;
-
-    private Bundle m_Bundle;
+    private Button mButtonSearch;
+    private Button mButtonClear;
+    private Bundle mBundle;
 
     //sign if the date is ilegal
-    private boolean m_FlagDate = true;
+    private boolean mFlagDate = true;
 
     //hash maps for id platform and set to filter search
-    private HashMap<eExtantionType, String > m_HashMap;
-    private HashMap<String, Integer> m_IdPlatformAndNames;
-    private String m_EditText = null;
+    private HashMap<eExtantionType, String > mHashMap;
+    private HashMap<String, Integer> mIdPlatformAndNames;
+    private String mEditText = null;
 
     //For take year and checking
-    private String m_YearFrom = null;
-    private String m_YearTo = null;
+    private String mYearFrom = null;
+    private String mYearTo = null;
 
     public SearchFragments()
     {
@@ -109,24 +105,24 @@ public class SearchFragments extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        m_RootView =  inflater.inflate(R.layout.fragment_search_fragments, container, false);
-        m_Cointener = container;
-        m_LayoutInflater = inflater;
-        m_Bundle = savedInstanceState;
+        mRootView =  inflater.inflate(R.layout.fragment_search_fragments, container, false);
+        mCointener = container;
+        mLayoutInflater = inflater;
+        mBundle = savedInstanceState;
 
-        m_SpinnerPlatforms = (Spinner)m_RootView.findViewById(R.id.spinner_platform);
-        m_SpinnerPublisher = (Spinner)m_RootView.findViewById(R.id.spinner_publisher);
-        m_SpinnerGenres = (Spinner)m_RootView.findViewById(R.id.spinner_gener);
-        m_SpinnerReleaseFrom = (Spinner)m_RootView.findViewById(R.id.spinner_year_of_release_from);
-        m_SpinnerReleaseTo = (Spinner)m_RootView.findViewById(R.id.spinner_year_of_release_to);
-        m_SpinnerDeveloprs = (Spinner)m_RootView.findViewById(R.id.spinner_developrs);
+        mSpinnerPlatforms = (Spinner) mRootView.findViewById(R.id.spinner_platform);
+        mSpinnerPublisher = (Spinner) mRootView.findViewById(R.id.spinner_publisher);
+        mSpinnerGenres = (Spinner) mRootView.findViewById(R.id.spinner_gener);
+        mSpinnerReleaseFrom = (Spinner) mRootView.findViewById(R.id.spinner_year_of_release_from);
+        mSpinnerReleaseTo = (Spinner) mRootView.findViewById(R.id.spinner_year_of_release_to);
+        mSpinnerDeveloprs = (Spinner) mRootView.findViewById(R.id.spinner_developrs);
 
-        m_ButtonSearch = (Button) m_RootView.findViewById(R.id.button_search);
-        m_ButtonClear =  (Button) m_RootView.findViewById(R.id.button_clear);
+        mButtonSearch = (Button) mRootView.findViewById(R.id.button_search);
+        mButtonClear =  (Button) mRootView.findViewById(R.id.button_clear);
 
-        m_TextSearch =  m_RootView.findViewById(R.id.search_input_text);
-        m_HashMap = new HashMap<>();
-        m_IdPlatformAndNames = new HashMap<>();
+        mTextSearch =  mRootView.findViewById(R.id.search_input_text);
+        mHashMap = new HashMap<>();
+        mIdPlatformAndNames = new HashMap<>();
 
         callToDeveloprsSpinner();
         callToPlatformsSpinner();
@@ -134,18 +130,18 @@ public class SearchFragments extends Fragment implements View.OnClickListener
         callToGenresSpinner();
         spinnerYearsOfRelease();
 
-        m_ButtonSearch.setOnClickListener(this);
-        m_ButtonClear.setOnClickListener(this);
+        mButtonSearch.setOnClickListener(this);
+        mButtonClear.setOnClickListener(this);
 
-        m_SpinnerDeveloprs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinnerDeveloprs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
 
                 if(!parent.getItemAtPosition(position).equals("Choose Developrs"))
                 {
 
-                    String item = m_SpinnerDeveloprs.getSelectedItem().toString();
-                    m_HashMap.put(eExtantionType.Developrs, item);
+                    String item = mSpinnerDeveloprs.getSelectedItem().toString();
+                    mHashMap.put(eExtantionType.Developrs, item);
 
                 }
 
@@ -158,7 +154,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
         });
 
-        m_SpinnerPlatforms.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinnerPlatforms.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
@@ -166,9 +162,9 @@ public class SearchFragments extends Fragment implements View.OnClickListener
                 if(!parent.getItemAtPosition(position).equals("Choose Platform"))
                 {
 
-                    String item = m_SpinnerPlatforms.getSelectedItem().toString();
-                    Log.d("Item", String.valueOf(m_IdPlatformAndNames.get(item)));
-                    m_HashMap.put(eExtantionType.Platform, String.valueOf(m_IdPlatformAndNames.get(item)));
+                    String item = mSpinnerPlatforms.getSelectedItem().toString();
+                    Log.d("Item", String.valueOf(mIdPlatformAndNames.get(item)));
+                    mHashMap.put(eExtantionType.Platform, String.valueOf(mIdPlatformAndNames.get(item)));
 
                 }
 
@@ -181,15 +177,15 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
         });
 
-        m_SpinnerReleaseFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinnerReleaseFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if(!parent.getItemAtPosition(position).equals("Choose Year"))
                 {
 
-                    String item = m_SpinnerReleaseFrom.getSelectedItem().toString();
-                    m_YearFrom = item + "-01-01";
+                    String item = mSpinnerReleaseFrom.getSelectedItem().toString();
+                    mYearFrom = item + "-01-01";
 
                 }
 
@@ -202,18 +198,18 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
         });
 
-        m_SpinnerReleaseTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinnerReleaseTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if(!parent.getItemAtPosition(position).equals("Choose Year")){
 
-                    if (m_HashMap.containsKey(eExtantionType.ReleaseDate))
+                    if (mHashMap.containsKey(eExtantionType.ReleaseDate))
                     {
 
-                        String item = m_SpinnerReleaseTo.getSelectedItem().toString();
-                        m_YearTo = item + "-12-31";
+                        String item = mSpinnerReleaseTo.getSelectedItem().toString();
+                        mYearTo = item + "-12-31";
 
                     }
 
@@ -228,14 +224,14 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
         });
 
-        m_SpinnerGenres.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinnerGenres.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if(!parent.getItemAtPosition(position).equals("Choose Genre"))
                 {
-                    String item = m_SpinnerGenres.getSelectedItem().toString();
-                    m_HashMap.put(eExtantionType.Genre, item);
+                    String item = mSpinnerGenres.getSelectedItem().toString();
+                    mHashMap.put(eExtantionType.Genre, item);
 
                 }
 
@@ -249,14 +245,14 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
         });
 
-        m_SpinnerPublisher.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinnerPublisher.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if(!parent.getItemAtPosition(position).equals("Choose Publisher")){
 
-                    String item = m_SpinnerPublisher.getSelectedItem().toString();
-                    m_HashMap.put(eExtantionType.Publisher, item);
+                    String item = mSpinnerPublisher.getSelectedItem().toString();
+                    mHashMap.put(eExtantionType.Publisher, item);
 
                 }
 
@@ -269,7 +265,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
         });
 
-        return m_RootView;
+        return mRootView;
 
     }
 
@@ -284,13 +280,13 @@ public class SearchFragments extends Fragment implements View.OnClickListener
                 {
 
                     platformNamesList.add(platform.getName());
-                    m_IdPlatformAndNames.put(platform.getName(),platform.getId());
+                    mIdPlatformAndNames.put(platform.getName(),platform.getId());
 
                 }
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(inflater.getContext(), R.layout.my_selected_item, platformNamesList);
                 adapter.setDropDownViewResource(R.layout.my_selected_item_dropdown);
-                 m_SpinnerPlatforms.setAdapter(adapter);
+                 mSpinnerPlatforms.setAdapter(adapter);
 
     }
 
@@ -323,11 +319,11 @@ public class SearchFragments extends Fragment implements View.OnClickListener
         ReleaseYears.add("2020");
         ReleaseYears.add("2021");
 
-        ArrayAdapter<String> adapter =new ArrayAdapter<String>(m_LayoutInflater.getContext(), R.layout.my_selected_item, ReleaseYears);
+        ArrayAdapter<String> adapter =new ArrayAdapter<String>(mLayoutInflater.getContext(), R.layout.my_selected_item, ReleaseYears);
 
         adapter.setDropDownViewResource(R.layout.my_selected_item_dropdown);
-        m_SpinnerReleaseFrom.setAdapter(adapter);
-        m_SpinnerReleaseTo.setAdapter(adapter);
+        mSpinnerReleaseFrom.setAdapter(adapter);
+        mSpinnerReleaseTo.setAdapter(adapter);
 
     }
 
@@ -347,7 +343,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(inflater.getContext(), R.layout.my_selected_item, publisherNamesList);
         adapter.setDropDownViewResource(R.layout.my_selected_item_dropdown);
-        m_SpinnerPublisher.setAdapter(adapter);
+        mSpinnerPublisher.setAdapter(adapter);
 
     }
 
@@ -366,7 +362,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(inflater.getContext(), R.layout.my_selected_item, genresModelNamesList);
         adapter.setDropDownViewResource(R.layout.my_selected_item_dropdown);
-        m_SpinnerGenres.setAdapter(adapter);
+        mSpinnerGenres.setAdapter(adapter);
 
     }
 
@@ -387,7 +383,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(inflater.getContext(), R.layout.my_selected_item, developrModelNamesList);
         adapter.setDropDownViewResource(R.layout.my_selected_item_dropdown);
-        m_SpinnerDeveloprs.setAdapter(adapter);
+        mSpinnerDeveloprs.setAdapter(adapter);
 
     }
 
@@ -401,18 +397,18 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
             case R.id.button_search:
 
-                if (m_TextSearch.getText().toString().equals("What is on your mind?") || m_TextSearch.getText().toString().equals(""))
+                if (mTextSearch.getText().toString().equals("What is on your mind?") || mTextSearch.getText().toString().equals(""))
                 {
 
-                    if (m_HashMap != null)
+                    if (mHashMap != null)
                     {
 
                         if (checkingYearIsIllegal())//true is enter
                         {
 
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable(KEY_HASH, m_HashMap);
-                            bundle.putString(KEY_STRING, m_EditText);
+                            bundle.putSerializable(KEY_HASH, mHashMap);
+                            bundle.putString(KEY_STRING, mEditText);
                             filteredGamesFragment = new ResultBySearch();
                             filteredGamesFragment.setArguments(bundle);
 
@@ -430,22 +426,22 @@ public class SearchFragments extends Fragment implements View.OnClickListener
                 else
                 {
 
-                    if (m_FlagDate == false)
+                    if (mFlagDate == false)
                     {
 
-                        Toast.makeText(m_RootView.getContext(),"Wrong Release Date Input, Please Fix it",Toast.LENGTH_LONG).show();
+                        Toast.makeText(mRootView.getContext(),"Wrong Release Date Input, Please Fix it",Toast.LENGTH_LONG).show();
 
                     }
                     else
                     {
 
-                        m_HashMap = null;
+                        mHashMap = null;
                         Bundle bundle = new Bundle();
-                        String m_EditText = m_TextSearch.getText().toString();
+                        String m_EditText = mTextSearch.getText().toString();
                         m_EditText = m_EditText.replace(' ', '-').toLowerCase();
 
                         bundle.putString(KEY_STRING, m_EditText);
-                        bundle.putSerializable(KEY_HASH, m_HashMap);
+                        bundle.putSerializable(KEY_HASH, mHashMap);
                         filteredGamesFragment  = new ResultBySearch();
                         filteredGamesFragment.setArguments(bundle);
 
@@ -458,15 +454,15 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
             case R.id.button_clear:
 
-                  m_SpinnerGenres.setSelection(0);
-                  m_SpinnerPlatforms.setSelection(0);
-                  m_SpinnerPublisher.setSelection(0);
-                  m_SpinnerReleaseFrom.setSelection(0);
-                  m_SpinnerReleaseTo.setSelection(0);
-                  m_TextSearch.setText("What is on your mind?");
-                  m_FlagDate = true;
-                  m_HashMap = new HashMap<>();
-                  m_IdPlatformAndNames = new HashMap<>();
+                  mSpinnerGenres.setSelection(0);
+                  mSpinnerPlatforms.setSelection(0);
+                  mSpinnerPublisher.setSelection(0);
+                  mSpinnerReleaseFrom.setSelection(0);
+                  mSpinnerReleaseTo.setSelection(0);
+                  mTextSearch.setText("What is on your mind?");
+                  mFlagDate = true;
+                  mHashMap = new HashMap<>();
+                  mIdPlatformAndNames = new HashMap<>();
 
                 break;
 
@@ -482,7 +478,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
             public <T> void onSuccess(@NonNull List<T> spinner)
             {
 
-                spinnerPlatform(m_LayoutInflater, m_Cointener, m_Bundle, (List<PlatformModel>)spinner);
+                spinnerPlatform(mLayoutInflater, mCointener, mBundle, (List<PlatformModel>)spinner);
 
             }
 
@@ -493,7 +489,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
             @Override
             public void onError(@NonNull Throwable throwable) {
-                Toast.makeText(m_RootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT);
+                Toast.makeText(mRootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT);
 
             }
 
@@ -509,7 +505,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
             @Override
             public <T> void onSuccess(@NonNull List<T> spinner) {
 
-                spinnerPublisher(m_LayoutInflater, m_Cointener, m_Bundle, (List<PublisherModel>)spinner);
+                spinnerPublisher(mLayoutInflater, mCointener, mBundle, (List<PublisherModel>)spinner);
 
             }
 
@@ -521,7 +517,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
             @Override
             public void onError(@NonNull Throwable throwable) {
-                Toast.makeText(m_RootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT);
+                Toast.makeText(mRootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT);
 
             }
 
@@ -536,7 +532,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
             @Override
             public <T> void onSuccess(@NonNull List<T> spinner) {
                 
-                spinnerDeveloprs(m_LayoutInflater, m_Cointener, m_Bundle, (List<DevelopersModel>) spinner);
+                spinnerDeveloprs(mLayoutInflater, mCointener, mBundle, (List<DevelopersModel>) spinner);
 
             }
 
@@ -548,7 +544,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
             @Override
             public void onError(@NonNull Throwable throwable) {
 
-                Toast.makeText(m_RootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT);
+                Toast.makeText(mRootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT);
 
             }
         });
@@ -564,7 +560,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
             @Override
             public <T> void onSuccess(@NonNull List<T> spinner) {
 
-                spinnerGenres(m_LayoutInflater, m_Cointener, m_Bundle, (List<GenresModel>)spinner);
+                spinnerGenres(mLayoutInflater, mCointener, mBundle, (List<GenresModel>)spinner);
 
             }
 
@@ -576,7 +572,7 @@ public class SearchFragments extends Fragment implements View.OnClickListener
 
             @Override
             public void onError(@NonNull Throwable throwable) {
-                Toast.makeText(m_RootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT);
+                Toast.makeText(mRootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT);
 
             }
 
@@ -587,42 +583,42 @@ public class SearchFragments extends Fragment implements View.OnClickListener
     private boolean checkingYearIsIllegal()
     {
 
-        m_FlagDate = false;
+        mFlagDate = false;
         String date = null;
 
-          if (m_YearFrom == null &&  m_YearTo == null)// Year From AND TO Year is null
+          if (mYearFrom == null &&  mYearTo == null)// Year From AND TO Year is null
                  {
 
-                     m_FlagDate = !m_FlagDate;
+                     mFlagDate = !mFlagDate;
 
                  }
-                 else if (m_YearFrom == null && m_YearTo != null)// From is null AND to Yeas isn't null, we take only year of to
+                 else if (mYearFrom == null && mYearTo != null)// From is null AND to Yeas isn't null, we take only year of to
                  {
 
-                     date = String.format(m_SpinnerReleaseTo.getSelectedItem().toString() + "-01-01" + "," + m_YearTo);
-                     m_FlagDate = !m_FlagDate;
+                     date = String.format(mSpinnerReleaseTo.getSelectedItem().toString() + "-01-01" + "," + mYearTo);
+                     mFlagDate = !mFlagDate;
 
                  }
-                 else if( m_YearFrom != null && m_YearTo != null)// To AND From isn't null
+                 else if( mYearFrom != null && mYearTo != null)// To AND From isn't null
                  {
 
-                     if (Integer.parseInt(m_YearFrom.substring(0,4)) < Integer.parseInt(m_YearTo.substring(0,4))) // who is bigger, if To is bigger, return true else false
+                     if (Integer.parseInt(mYearFrom.substring(0,4)) < Integer.parseInt(mYearTo.substring(0,4))) // who is bigger, if To is bigger, return true else false
                      {
 
-                         date = String.format(m_YearFrom + "," + m_YearTo);
-                         m_FlagDate = !m_FlagDate;
+                         date = String.format(mYearFrom + "," + mYearTo);
+                         mFlagDate = !mFlagDate;
                      }
 
                  }
                  else {//From isn't null and To is null
 
-              date = String.format(m_YearFrom + "," + m_SpinnerReleaseFrom.getSelectedItem().toString() + "-12-31");
-              m_FlagDate = !m_FlagDate;
+              date = String.format(mYearFrom + "," + mSpinnerReleaseFrom.getSelectedItem().toString() + "-12-31");
+              mFlagDate = !mFlagDate;
 
           }
 
-            m_HashMap.put(eExtantionType.ReleaseDate, date);
-            return m_FlagDate;
+            mHashMap.put(eExtantionType.ReleaseDate, date);
+            return mFlagDate;
 
         }
 

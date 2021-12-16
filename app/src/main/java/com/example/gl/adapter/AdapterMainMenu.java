@@ -32,8 +32,13 @@ import java.util.List;
 public class AdapterMainMenu extends RecyclerView.Adapter<AdapterMainMenu.ViewHolder>
 {
 
+    /** Key for send to other fragment  (GameSingle)*/
     private final String KEY_GAME_BY_ID = "GAME_BY_ID";
+
+    /** List response*/
     private List<GameModel> m_GameModelList;
+
+    /** Screen to send*/
     private Context m_NewContext;
 
     public AdapterMainMenu(List<GameModel> m_GameModelList, Context m_NewContext)
@@ -46,8 +51,10 @@ public class AdapterMainMenu extends RecyclerView.Adapter<AdapterMainMenu.ViewHo
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
 
+        //Get the card view, location of the card view in program and send for set the values in card
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_main_menu, parent, false);
 
         return new AdapterMainMenu.ViewHolder(view);
@@ -66,6 +73,7 @@ public class AdapterMainMenu extends RecyclerView.Adapter<AdapterMainMenu.ViewHo
         //set image url on imageView
         String imgaeURL = games.getBackground_image();
 
+        //Statment picture profile game if had or not
         if (imgaeURL != null)
         {
 
@@ -92,6 +100,7 @@ public class AdapterMainMenu extends RecyclerView.Adapter<AdapterMainMenu.ViewHo
             @Override
             public void onClick(View v) {
 
+                //Get from api and send the id of the game when the user click about card view specific
                 ResponseFromAPI.getInstance().GetGameById(games.getId().toString(), new IMyCallback() {
 
                     @Override
@@ -99,7 +108,7 @@ public class AdapterMainMenu extends RecyclerView.Adapter<AdapterMainMenu.ViewHo
 
                     }
 
-
+                    //Get full details game by id
                     @Override
                     public void onSuccess(@NonNull GameSingleModel gamesSingle)
                     {
@@ -114,6 +123,7 @@ public class AdapterMainMenu extends RecyclerView.Adapter<AdapterMainMenu.ViewHo
 
                     }
 
+                    //Response error to screen
                     @Override
                     public void onError(@NonNull Throwable throwable)
                     {

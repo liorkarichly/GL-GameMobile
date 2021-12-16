@@ -3,18 +3,17 @@ package com.example.gl.fragment;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.gl.mainActivity.ManagerCallsFromAPI;
+import androidx.annotation.RequiresApi;
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
+
 import com.example.gl.R;
+import com.example.gl.mainActivity.ManagerCallsFromAPI;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,14 +28,22 @@ public class AllGamesFragments extends Fragment
 
     // TODO: Rename and change types of parameters
 
-    private NestedScrollView m_NestedScrollView;
-    private final String KEY_MANAGER_CALL_API = "MANAGER_API";
-    private static ManagerCallsFromAPI m_ManagerCallsFromAPI;
-    private View m_Root;
+    //List of games in the screen and we want to pull nore games to the list
+    private NestedScrollView mNestedScrollView;
 
-    private ViewGroup m_Container;
-    private int m_PageNext = 1;
-    private final boolean m_FeatchDataToRecycleView = true;
+    //Key for get from api
+    private final String KEY_MANAGER_CALL_API = "MANAGER_API";
+
+    //Call to games from the manager
+    private static ManagerCallsFromAPI sManagerCallsFromAPI;
+
+    //Fragment view
+    private View mRoot;
+    private ViewGroup mContainer;
+
+    //Count page of games that we get from api
+    private int mPageNext = 1;
+    private final boolean fFeatchDataToRecycleView = true;
 
     public AllGamesFragments() {
 
@@ -69,28 +76,33 @@ public class AllGamesFragments extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        m_Root = inflater.inflate(R.layout.fragment_all_games_fragments, container, false);
-        m_Container = container;
-        m_NestedScrollView = m_Root.findViewById(R.id.nested_scrool_view);
 
+        // Inflate the layout for this fragment
+        mRoot = inflater.inflate(R.layout.fragment_all_games_fragments, container, false);
+        mContainer = container;
+
+        //Take the id of the list
+        mNestedScrollView = mRoot.findViewById(R.id.nested_scrool_view);
+
+        //Get details from user and get the key
         savedInstanceState = this.getArguments();
 
         if (savedInstanceState != null)
         {
 
-         m_ManagerCallsFromAPI = (ManagerCallsFromAPI) savedInstanceState.getSerializable(KEY_MANAGER_CALL_API);
+         sManagerCallsFromAPI = (ManagerCallsFromAPI) savedInstanceState.getSerializable(KEY_MANAGER_CALL_API);
 
         }
 
-        m_ManagerCallsFromAPI.getM_ListGameModel().clear();
-        m_PageNext = 1;
+        //clear the list
+        sManagerCallsFromAPI.getM_ListGameModel().clear();
+        mPageNext = 1;
 
         //First call
-        m_ManagerCallsFromAPI.CallToAllGame(m_PageNext, m_Root, m_Container, m_FeatchDataToRecycleView);
+        sManagerCallsFromAPI.CallToAllGame(mPageNext, mRoot, mContainer, fFeatchDataToRecycleView);
 
         //Scroll down in recycle view
-        m_NestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+        mNestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
 
             try
             {
@@ -100,8 +112,8 @@ public class AllGamesFragments extends Fragment
 
                     // in this method we are incrementing page number,
                     // making progress bar visible and calling get data method.
-                    m_PageNext++;
-                    m_ManagerCallsFromAPI.CallToAllGame(m_PageNext, m_Root, m_Container, m_FeatchDataToRecycleView);
+                    mPageNext++;
+                    sManagerCallsFromAPI.CallToAllGame(mPageNext, mRoot, mContainer, fFeatchDataToRecycleView);
 
                 }
 
@@ -109,13 +121,13 @@ public class AllGamesFragments extends Fragment
             catch (Exception e)
             {
 
-                Toast.makeText(m_Root.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(mRoot.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 
             }
 
         });
 
-        return m_Root;
+        return mRoot;
 
     }
 

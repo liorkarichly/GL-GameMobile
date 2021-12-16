@@ -66,9 +66,9 @@
         android:text="We are students to B.Cs Computer Scince, HIT Holon Institute of Technology, Israel,  the our app was developed during the course
 Developing client-side in Android Environment, 2020-2021.\n
 
-The purpose of the app is to provide a user-friendly interface for searching for information for a game or series of games, in addition to which it will appear the hottest games or games coming out soon.\n
+The purpose of the app is to provide a user-friendly interface for searching for information about games or series of games, in addition to which it will appear the hottest games or games coming out soon, and stores nearby the user.\n
 
-The app was developed in Java language, in the Android Studio engine, all information about the games is retrieved using the RAWG API in communication with RETROFIT 2 "/>
+The app was developed in Java language, in the Android Studio engine, all information about the games is retrieved using the RAWG API in communication with RETROFIT 2, RESTFul API and use in Google Maps API for present stores on the map."/>
 
         <TextView
             android:layout_width="wrap_content"

@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.example.gl.fragment.AboutUsFragments;
 import com.example.gl.fragment.AllGamesFragments;
-import com.example.gl.fragment.CoomingSoonFragments;
+import com.example.gl.fragment.ComingSoonFragments;
 import com.example.gl.fragment.MainMenuFragments;
 import com.example.gl.fragment.SearchFragments;
 import com.example.gl.fragment.TopGamesFragments;
@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class ManagerApp implements Serializable
 {
 
-    private final ManagerCallsFromAPI f_ManagerCallFromAPI = new ManagerCallsFromAPI();
+    private final ManagerCallsFromAPI fManagerCallFromAPI = new ManagerCallsFromAPI();
     private final String KEY_MANAGER_CALL_API = "MANAGER_API";
     private final String KEY_MANAGER_APP = "MANAGER_APP";
 
@@ -29,7 +29,7 @@ public class ManagerApp implements Serializable
 
         Bundle bundel = new Bundle();
         MainMenuFragments mainMenuFragments = new MainMenuFragments();
-        bundel.putSerializable(KEY_MANAGER_CALL_API, f_ManagerCallFromAPI);
+        bundel.putSerializable(KEY_MANAGER_CALL_API, fManagerCallFromAPI);
         bundel.putSerializable(KEY_MANAGER_APP, this);
         mainMenuFragments.setArguments(bundel);
 
@@ -43,7 +43,7 @@ public class ManagerApp implements Serializable
 
         Bundle bundel = new Bundle();
         AllGamesFragments allGamesFragments = new AllGamesFragments();
-        bundel.putSerializable(KEY_MANAGER_CALL_API, f_ManagerCallFromAPI);
+        bundel.putSerializable(KEY_MANAGER_CALL_API, fManagerCallFromAPI);
         allGamesFragments.setArguments(bundel);
 
         return allGamesFragments;
@@ -56,7 +56,7 @@ public class ManagerApp implements Serializable
 
         Bundle bundel = new Bundle();
         SearchFragments searchFragments = new SearchFragments();
-        bundel.putSerializable(KEY_MANAGER_CALL_API, f_ManagerCallFromAPI);
+        bundel.putSerializable(KEY_MANAGER_CALL_API, fManagerCallFromAPI);
         searchFragments.setArguments(bundel);
 
         return searchFragments;
@@ -69,7 +69,7 @@ public class ManagerApp implements Serializable
 
         Bundle bundel = new Bundle();
         TopGamesFragments topGamesFragments = new TopGamesFragments();
-        bundel.putSerializable(KEY_MANAGER_CALL_API, f_ManagerCallFromAPI);
+        bundel.putSerializable(KEY_MANAGER_CALL_API, fManagerCallFromAPI);
         topGamesFragments.setArguments(bundel);
 
         return topGamesFragments;
@@ -77,12 +77,12 @@ public class ManagerApp implements Serializable
     }
 
     //Get fragment cooming soon
-    public CoomingSoonFragments GetCoomingSoon()
+    public ComingSoonFragments GetCoomingSoon()
     {
 
         Bundle bundel = new Bundle();
-        CoomingSoonFragments coomingSoonFragments = new CoomingSoonFragments();
-        bundel.putSerializable(KEY_MANAGER_CALL_API, f_ManagerCallFromAPI);
+        ComingSoonFragments coomingSoonFragments = new ComingSoonFragments();
+        bundel.putSerializable(KEY_MANAGER_CALL_API, fManagerCallFromAPI);
         coomingSoonFragments.setArguments(bundel);
 
         return coomingSoonFragments;
