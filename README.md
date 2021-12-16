@@ -19,3 +19,6 @@
 ## Games store near the user 
 ![map](https://user-images.githubusercontent.com/36056001/135849323-da0c8d81-58b0-4950-8277-6ac43237f73e.png)
 
+# Video about the app (In Hebrew)
+link: https://github.com/liorkarichly/GL-GameMobile/blob/master/GL%20Game%20Moblie%20trailer.mp4
+
